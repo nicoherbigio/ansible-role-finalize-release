@@ -1,0 +1,28 @@
+---
+
+- name: Gather facts to finalize the new release.
+  deploy_helper:
+    state: query
+    path: "{{ finalize_release_root_path }}"
+    current_path: "{{ finalize_release_current_path }}"
+    releases_path: "{{ finalize_release_releases_path }}"
+    shared_path: "{{ finalize_release_shared_path }}"
+    release: "{{ finalize_release_new_release }}"
+
+- name: Update the current symlink to the newly deployed release.
+  deploy_helper:
+    state: finalize
+    clean: false
+    path: "{{ deploy_helper.project_path }}"
+    current_path: "{{ deploy_helper.current_path }}"
+    releases_path: "{{ deploy_helper.releases_path }}"
+    release: "{{ deploy_helper.new_release }}"
+
+- name: Cleanup of old and unfinished releases if configured.
+  deploy_helper:
+    state: clean
+    path: "{{ deploy_helper.project_path }}"
+    releases_path: "{{ deploy_helper.releases_path }}"
+    release: "{{ deploy_helper.new_release }}"
+    keep_releases: "{{ finalize_release_keep_number_of_releases }}"
+  when: finalize_release_clean_releases

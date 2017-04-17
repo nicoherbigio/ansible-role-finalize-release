@@ -1,0 +1,41 @@
+---
+
+# The root path of the project.
+# By default, the value will be either:
+#   - set to the value of the variable "{{ prepare_release_root_path }}" defined inside the "nicoherbigio.prepare-release" role or
+#   - set to "omit" (not defined) if the previous fact is not defined.
+finalize_release_root_path: "{{ prepare_release_root_path | default(omit) }}"
+
+# The path of the symlink that will be created when the deploy is finalized.
+# This option can be relative to "{{ finalize_release_root_path }}" or absolute.
+# By default, the value will be either:
+#   - set to the value of "{{ prepare_release_current_path }}" defined inside the "nicoherbigio.prepare-release" role or
+#   - set to "current" if the previous fact is not defined.
+finalize_release_current_path: "{{ prepare_release_current_path | default('current') }}"
+
+# The path of the folder that will hold the releases.
+# This option can be relative to "{{ finalize_release_root_path }}" or absolute.
+# By default, the value will be either:
+#   - set to the value of "{{ prepare_release_releases_path }}" defined inside the "nicoherbigio.prepare-release" role or
+#   - set to "releases" if the previous fact is not defined.
+finalize_release_releases_path: "{{ prepare_release_releases_path | default('releases') }}"
+
+# The path of the folder that will hold the shared resources.
+# This option can be relative to "{{ finalize_release_root_path }}" or absolute.
+# If this option is set to an empty string, no shared folder will be created.
+# By default, the value will be either:
+#   - set to the value of "{{ prepare_release_shared_path }}" defined inside the "nicoherbigio.prepare-release" role or
+#   - set to "shared" if the previous fact is not defined.
+finalize_release_shared_path: "{{ prepare_release_shared_path | default('shared') }}"
+
+# The version respectively the folder name of the new release that will hold the new resources.
+# By default, the value will be either:
+#   - set to the value of the variable "{{ prepare_release_new_release }}" defined inside the "nicoherbigio.prepare-release" role or
+#   - set to "omit" (not defined) if the previous fact is not defined.
+finalize_release_new_release: "{{ prepare_release_new_release | default(omit) }}"
+
+# Whether to clean old and unfinished releases.
+finalize_release_clean_releases: true
+
+# The number of previous successfully deployed releases to keep when cleaning.
+finalize_release_keep_number_of_releases: 5
